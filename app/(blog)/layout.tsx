@@ -17,6 +17,9 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import Link from "next/link";
+import AlertBanner from "./alert-banner";
+import Comment from '@/app/(blog)/comment/page';
+
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityFetch({
@@ -67,7 +70,8 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} bg-white text-black`}>
       <body>
-        
+        <section className="min-h-screen">
+          <AlertBanner />
           <main>{children}</main>
           <footer className="bg-accent-1 border-accent-2 border-t">
             <div className="container mx-auto px-5">
@@ -94,10 +98,12 @@ export default async function RootLayout({
               )}
             </div>
           </footer>
-       
+       </section>
         {isDraftMode && <VisualEditing />}
         <SpeedInsights />
+      <Comment />
       </body>
+      
     </html>
   );
 }
